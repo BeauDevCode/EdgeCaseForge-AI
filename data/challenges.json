@@ -1,0 +1,142 @@
+[
+  {
+    "id": "ledger_reconciler",
+    "title": "Ledger Reconciler",
+    "category": "Data Processing",
+    "difficulty": "Medium",
+    "statement": "You are given a transaction ledger. Each line has transaction_id, account_id, amount_cents, and status. Ignore duplicate transaction IDs after the first occurrence. Count only POSTED transactions. Return each account's net balance in ascending account_id order.",
+    "input_format": "First line: integer n. Next n lines: transaction_id account_id amount_cents status",
+    "output_format": "One line per account: account_id balance_cents",
+    "constraints": "1 <= n <= 200000. transaction_id and account_id contain no spaces. amount_cents may be negative.",
+    "why_llms_fail": [
+      "They often forget to deduplicate by transaction_id.",
+      "They may count PENDING or VOID transactions.",
+      "They may sort by insertion order instead of account_id.",
+      "They may mishandle negative cents."
+    ],
+    "sample_tests": [
+      {
+        "name": "basic posted only",
+        "input": "5\nt1 a2 500 POSTED\nt2 a1 300 POSTED\nt3 a2 -100 POSTED\nt4 a1 999 PENDING\nt1 a2 700 POSTED\n",
+        "expected": "a1 300\na2 400"
+      },
+      {
+        "name": "all ignored duplicate first wins",
+        "input": "4\nx1 bob 50 VOID\nx1 bob 100 POSTED\nx2 bob -10 POSTED\nx3 ann 5 POSTED\n",
+        "expected": "ann 5\nbob -10"
+      }
+    ],
+    "hidden_test_ideas": [
+      "Large n with repeated transaction IDs scattered throughout the file.",
+      "Accounts that end at zero balance should still appear if they had counted POSTED transactions.",
+      "Negative-only account balances.",
+      "Duplicate ID where first transaction is non-POSTED and second is POSTED; second must be ignored."
+    ],
+    "golden_solution_hint": "Use a set for seen transaction IDs and a dictionary for account balances. Only process the first time each transaction_id appears."
+  },
+  {
+    "id": "room_collision_validator",
+    "title": "Room Collision Validator",
+    "category": "Game Development / Geometry",
+    "difficulty": "Hard",
+    "statement": "A 2D top-down game level contains axis-aligned rectangular walls. A player is represented as a circle. Given the player's path points in order, return the first step index where the circle overlaps any wall, or SAFE if no collision occurs.",
+    "input_format": "First line: w r. Next w lines: x1 y1 x2 y2 for walls. Next line: p. Next p lines: x y for player center at each step.",
+    "output_format": "The first zero-based path index causing collision, or SAFE.",
+    "constraints": "Coordinates are integers. Walls may be given with reversed corners. Radius r is non-negative.",
+    "why_llms_fail": [
+      "They check only the circle center inside the rectangle, not circle-rectangle overlap.",
+      "They forget reversed rectangle coordinates.",
+      "They mishandle touching edges as collision.",
+      "They use distance to rectangle center instead of closest point."
+    ],
+    "sample_tests": [
+      {
+        "name": "touching wall counts as collision",
+        "input": "1 2\n5 0 8 5\n3\n0 0\n3 2\n10 10\n",
+        "expected": "1"
+      },
+      {
+        "name": "safe path",
+        "input": "1 1\n10 10 12 12\n2\n0 0\n8 8\n",
+        "expected": "SAFE"
+      }
+    ],
+    "hidden_test_ideas": [
+      "Wall coordinates reversed, such as x2 < x1.",
+      "Zero-radius player.",
+      "Circle touching rectangle corner exactly.",
+      "Multiple walls with collision not on first wall."
+    ],
+    "golden_solution_hint": "For each wall, clamp the circle center to the rectangle bounds and compare squared distance to r^2."
+  },
+  {
+    "id": "path_canonicalizer",
+    "title": "Path Canonicalizer",
+    "category": "Strings / Parsing",
+    "difficulty": "Medium",
+    "statement": "Normalize a Unix-style path. Multiple slashes count as one slash. '.' means current directory. '..' means parent directory but cannot go above root. Return the canonical absolute path.",
+    "input_format": "A single path string.",
+    "output_format": "The canonical absolute path.",
+    "constraints": "Path length <= 100000. Input is always absolute and begins with '/'.",
+    "why_llms_fail": [
+      "They allow '..' to pop above root.",
+      "They mishandle repeated slashes.",
+      "They return an empty string instead of '/'.",
+      "They treat hidden folders like '.config' as current directory."
+    ],
+    "sample_tests": [
+      {
+        "name": "many slash and dotdot",
+        "input": "/a//b/./c/../d/\n",
+        "expected": "/a/b/d"
+      },
+      {
+        "name": "cannot go above root",
+        "input": "/../../x/./y\n",
+        "expected": "/x/y"
+      }
+    ],
+    "hidden_test_ideas": [
+      "Path with only slashes.",
+      "Folder names containing dots like '...'.",
+      "Very long path with many '..'.",
+      "Trailing slash after normalization."
+    ],
+    "golden_solution_hint": "Split by '/', use a stack, ignore empty parts and '.', pop on '..' only when stack is non-empty."
+  },
+  {
+    "id": "dependency_upgrade_planner",
+    "title": "Dependency Upgrade Planner",
+    "category": "Graphs",
+    "difficulty": "Hard",
+    "statement": "Given packages and dependency rules A -> B meaning A must be upgraded before B, return a valid upgrade order. If multiple packages are available, choose lexicographically smallest. If impossible due to a cycle, return CYCLE.",
+    "input_format": "First line: n m. Next line: n package names. Next m lines: before after.",
+    "output_format": "Package names in valid order separated by spaces, or CYCLE.",
+    "constraints": "1 <= n <= 200000. Package names are unique lowercase strings.",
+    "why_llms_fail": [
+      "They use normal queue instead of lexicographic priority queue.",
+      "They reverse the edge direction.",
+      "They fail to detect cycles correctly.",
+      "They forget disconnected packages."
+    ],
+    "sample_tests": [
+      {
+        "name": "lexicographic topological sort",
+        "input": "4 2\ncore api ui db\ncore api\ncore db\n",
+        "expected": "core api db ui"
+      },
+      {
+        "name": "cycle",
+        "input": "3 3\na b c\na b\nb c\nc a\n",
+        "expected": "CYCLE"
+      }
+    ],
+    "hidden_test_ideas": [
+      "No edges: output all packages sorted lexicographically.",
+      "Disconnected components.",
+      "Large graph with one small cycle.",
+      "Edges repeated multiple times."
+    ],
+    "golden_solution_hint": "Use Kahn's algorithm with a min-heap. Deduplicate edges before incrementing indegree."
+  }
+]
