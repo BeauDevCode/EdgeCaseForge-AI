@@ -6,32 +6,20 @@
 
 This project was built as a portfolio project to demonstrate practical AI-evaluation, software engineering, and test-design skills.
 
----
-
 ## Why I Built This
 
 AI coding models can often solve simple examples, but they still fail on edge cases, ambiguous requirements, hidden constraints, and tricky validation logic.
 
-EdgeCaseForge AI focuses on the harder part of AI evaluation:
-
-- designing coding tasks that test real reasoning
-- identifying where models may fail
-- creating hidden tests and edge cases
-- validating sample solutions
-- explaining the golden-solution strategy
-
----
+EdgeCaseForge AI focuses on the harder part of AI evaluation: designing coding tasks that test real reasoning, identifying where models may fail, creating hidden tests and edge cases, validating sample solutions, and explaining the golden-solution strategy.
 
 ## Features
 
-- **Challenge library** with multiple coding task categories
-- **AI failure analysis** for each problem
-- **Hidden test-case ideas** for stronger evaluation
-- **Golden-solution hints** for benchmark design
-- **Python solution runner** for sample tests
-- **Portfolio pitch generator** for explaining the project
-
----
+- Challenge library with multiple coding task categories
+- AI failure analysis for each problem
+- Hidden test-case ideas for stronger evaluation
+- Golden-solution hints for benchmark design
+- Python solution runner for sample tests
+- Portfolio pitch generator for explaining the project
 
 ## Tech Stack
 
@@ -40,50 +28,32 @@ EdgeCaseForge AI focuses on the harder part of AI evaluation:
 - JSON
 - Subprocess-based local test runner
 
----
-
 ## Project Structure
 
 ```text
 EdgeCaseForge-AI/
-├── app.py
-├── requirements.txt
-├── README.md
-├── DEMO_SCRIPT.md
-├── LICENSE
-├── .gitignore
-├── data/
-│   └── challenges.json
-├── examples/
-│   └── ledger_solution.py
-└── assets/
-    └── preview.png
+|-- app.py
+|-- requirements.txt
+|-- README.md
+|-- DEMO_SCRIPT.md
+|-- LICENSE
+|-- .gitignore
+|-- data/
+|   `-- challenges.json
+|-- examples/
+|   `-- ledger_solution.py
+`-- assets/
+    `-- preview.png
 ```
 
----
-
 ## Getting Started
-
-### 1. Clone the repository
 
 ```bash
 git clone https://github.com/BeauDevCode/EdgeCaseForge-AI.git
 cd EdgeCaseForge-AI
-```
-
-### 2. Install dependencies
-
-```bash
 pip install -r requirements.txt
-```
-
-### 3. Run the app
-
-```bash
 streamlit run app.py
 ```
-
----
 
 ## How It Works
 
@@ -100,8 +70,6 @@ def solve(input_data: str) -> str:
 
 6. Run the sample tests.
 
----
-
 ## Example Challenge
 
 **Room Collision Validator**
@@ -115,26 +83,18 @@ Why this is difficult for AI models:
 - Reversed wall coordinates must be normalized.
 - Touching edges should be handled carefully.
 
----
-
 ## Portfolio Description
 
 > EdgeCaseForge AI is a Python/Streamlit app that helps design hard coding tasks for AI model evaluation. It creates problem statements, hidden test ideas, golden-solution hints, and model-failure explanations. I built it to show how AI coding models can be tested beyond simple examples, using edge cases and validation logic.
 
----
-
 ## What I Learned
 
-Building this project helped me practice:
-
-- designing better coding problems
-- thinking like an AI evaluator
-- writing clear test cases
-- creating edge-case-driven validation
-- building a clean Streamlit app
-- structuring a GitHub portfolio project
-
----
+- Designing better coding problems
+- Thinking like an AI evaluator
+- Writing clear test cases
+- Creating edge-case-driven validation
+- Building a clean Streamlit app
+- Structuring a GitHub portfolio project
 
 ## Future Improvements
 
@@ -143,8 +103,6 @@ Building this project helped me practice:
 - Add downloadable challenge packages
 - Add difficulty scoring based on edge-case coverage
 - Add optional LLM-assisted challenge generation
-
----
 
 ## License
 
