@@ -171,9 +171,9 @@ with tab3:
 
         for result in results:
             if result["passed"]:
-                st.success(f"✅ {result['name']}")
+                st.success(f"PASS: {result['name']}")
             else:
-                st.error(f"❌ {result['name']}")
+                st.error(f"FAIL: {result['name']}")
                 st.markdown("**Expected**")
                 st.code(result["expected"])
                 st.markdown("**Actual**")
